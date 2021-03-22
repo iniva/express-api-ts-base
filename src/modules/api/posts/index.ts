@@ -1,13 +1,14 @@
 import { Router } from 'express'
 
+import { AsyncHandler } from '@middlewares/AsyncHandler'
 import { PostCreateHandler } from './PostCreateHandler'
 import { PostListHandler } from './PostListHandler'
 
 const routes = Router()
 
 routes
-  .get('/', PostListHandler.handle)
-  .post('/', PostCreateHandler.handle)
+  .get('/', AsyncHandler.wrap(PostListHandler.handle))
+  .post('/', AsyncHandler.wrap(PostCreateHandler.handle))
 
 export default {
   prefix: '/posts',

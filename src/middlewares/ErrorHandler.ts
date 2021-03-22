@@ -32,7 +32,7 @@ const errorHandler = (
     req.log.error(error)
   }
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (statusCode < 500) {
     response['details'] = error.output.payload
   }
 

@@ -58,12 +58,6 @@ class Validator {
 
     return errorResponse
   }
-
-  static asResponse(validation: ValidationResult): Boom<any> {
-    const { errors } = this.parseValidation(validation)
-
-    return this.toResponse(errors)
-  }
 }
 
 export { Validator, ValidatorResult }
