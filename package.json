@@ -1,0 +1,85 @@
+{
+  "name": "express-api-ts-base",
+  "description": "Opinionated base code for an Express API using Typescript",
+  "version": "1.0.0",
+  "main": "./dist/src/index.js",
+  "repository": "git@github.com:iniva/express-api-ts-base.git",
+  "author": "Tony DBR <tonyblast@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12",
+    "yarn": ">=1.22.0"
+  },
+  "scripts": {
+    "build": "rm -rf ./dist && tsc",
+    "dev": "nodemon",
+    "test:lint": "eslint . --ext .ts",
+    "test:lint-fix": "eslint . --ext .ts --fix",
+    "test:unit": "NODE_ENV=test TS_NODE_PROJECT='./tsconfig-test-unit.json' mocha --ui bdd --timeout 10000 -r ts-node/register -r tsconfig-paths/register --recursive \"./test/unit/**/*.ts\"",
+    "test:coverage": "NODE_ENV=test TS_NODE_PROJECT='./tsconfig-test-unit.json' nyc mocha --ui bdd --recursive --timeout 10000 -r ts-node/register -r tsconfig-paths/register \"./test/unit/**/*.ts\"",
+    "release": "SKIP_PREPARE_COMMIT=true standard-version",
+    "release:dry": "SKIP_PREPARE_COMMIT=true standard-version --dry-run"
+  },
+  "dependencies": {
+    "@hapi/boom": "^9.1.1",
+    "express": "^4.17.1",
+    "express-pino-logger": "^6.0.0",
+    "got": "^11.8.2",
+    "ioredis": "^4.23.0",
+    "joi": "^17.4.0",
+    "lodash": "^4.17.20",
+    "pino": "^6.11.2",
+    "pino-pretty": "^4.5.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.15",
+    "@types/express": "^4.17.11",
+    "@types/express-pino-logger": "^4.0.2",
+    "@types/ioredis": "^4.22.0",
+    "@types/lodash": "^4.14.168",
+    "@types/mocha": "^8.2.1",
+    "@types/node": "^12.20.0",
+    "@types/pino": "^6.3.6",
+    "@typescript-eslint/eslint-plugin": "^4.15.2",
+    "@typescript-eslint/parser": "^4.15.2",
+    "chai": "^4.3.3",
+    "commitizen": "^4.2.3",
+    "cz-conventional-changelog": "^3.3.0",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.21.0",
+    "husky": "^5.1.1",
+    "mocha": "^8.3.0",
+    "nock": "^13.0.11",
+    "nodemon": "^2.0.7",
+    "nyc": "^15.1.0",
+    "standard-version": "^9.1.1",
+    "ts-node": "^9.1.1",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^4.2.2"
+  },
+  "nyc": {
+    "all": true,
+    "include": [
+      "src/**/*.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "reporter": [
+      "text",
+      "lcov",
+      "html"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "test $SKIP_PREPARE_COMMIT || (exec < /dev/tty && git cz --hook || true)",
+      "pre-push": "yarn test:lint"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}

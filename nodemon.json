@@ -1,0 +1,7 @@
+{
+  "ext": "ts,js,json",
+  "watch": [
+    "src"
+  ],
+  "exec": "ts-node -r dotenv/config -r tsconfig-paths/register src/index.ts"
+}
