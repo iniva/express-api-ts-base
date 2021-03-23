@@ -18,7 +18,8 @@
     "test:unit": "NODE_ENV=test TS_NODE_PROJECT='./tsconfig-test-unit.json' mocha --ui bdd --timeout 10000 -r ts-node/register -r tsconfig-paths/register --recursive \"./test/unit/**/*.ts\"",
     "test:coverage": "NODE_ENV=test TS_NODE_PROJECT='./tsconfig-test-unit.json' nyc mocha --ui bdd --recursive --timeout 10000 -r ts-node/register -r tsconfig-paths/register \"./test/unit/**/*.ts\"",
     "release": "SKIP_PREPARE_COMMIT=true standard-version",
-    "release:dry": "SKIP_PREPARE_COMMIT=true standard-version --dry-run"
+    "release:dry": "SKIP_PREPARE_COMMIT=true standard-version --dry-run",
+    "start": "node -r tsconfig-paths/register /app/src/index.js"
   },
   "dependencies": {
     "@hapi/boom": "^9.1.1",
@@ -29,7 +30,8 @@
     "joi": "^17.4.0",
     "lodash": "^4.17.20",
     "pino": "^6.11.2",
-    "pino-pretty": "^4.5.0"
+    "pino-pretty": "^4.5.0",
+    "tsconfig-paths": "^3.9.0"
   },
   "devDependencies": {
     "@types/chai": "^4.2.15",
@@ -54,7 +56,6 @@
     "nyc": "^15.1.0",
     "standard-version": "^9.1.1",
     "ts-node": "^9.1.1",
-    "tsconfig-paths": "^3.9.0",
     "typescript": "^4.2.2"
   },
   "nyc": {
