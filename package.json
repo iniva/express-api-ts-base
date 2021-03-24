@@ -69,6 +69,7 @@
     ],
     "reporter": [
       "text",
+      "text-summary",
       "lcov",
       "html"
     ]
