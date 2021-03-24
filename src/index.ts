@@ -1,4 +1,5 @@
 import express from 'express'
+import helmet from 'helmet'
 import pinoExpress from 'express-pino-logger'
 
 // Middlewares
@@ -25,6 +26,9 @@ for (const [option, value] of Object.entries(config.app)) {
 app.use(express.json())
 // Uncomment below line if you intend to receive payloads with "application/x-www-form-urlencoded"
 // app.use(express.urlencoded({ extended: true }))
+
+// Guard API against some harmful headers
+app.use(helmet())
 
 // Set API Logger
 app.use(pinoExpress({ ...config.logger }))
