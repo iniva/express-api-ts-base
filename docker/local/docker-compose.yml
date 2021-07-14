@@ -3,6 +3,8 @@ services:
   api_server:
     ports:
       - 8091:8091
+    networks:
+      - api-network
     build:
       context: ../../
       dockerfile: ./docker/local/Dockerfile
@@ -13,4 +15,27 @@ services:
       - ../../dist:/app/dist
       - ../../tsconfig.json:/app/tsconfig.json
       - ../../nodemon.json:/app/nodemon.json
+      - ../../knex-migrations:/app/knex-migrations
+      - ../../knexfile.ts:/app/knexfile.ts
     command: ["yarn", "dev"]
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: dev
+      POSTGRES_DB: develop
+    ports:
+      - 10432:5432
+    networks:
+      - api-network
+    volumes:
+      - ./data/db:/data/db
+    logging:
+      driver: none
+
+networks:
+  api-network:
+    driver: bridge

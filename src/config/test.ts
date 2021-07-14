@@ -32,6 +32,19 @@ const config: Configurations = {
     base: {
       hostname: os.hostname()
     }
+  },
+  database: {
+    host: process.env.DB_HOST || 'localhost',
+    port: Number(process.env.DB_PORT) || 5432,
+    user: process.env.DB_USERNAME || 'dev',
+    password: process.env.DB_PASSWORD || 'dev',
+    name: process.env.DB_NAME || 'test',
+    debug: false,
+    connectionTimeout: 60000,
+    tables: {
+      posts: 'posts'
+    },
+    migrationsTable: process.env.DB_MIGRATIONS_TABLE || 'knex_migrations'
   }
 }
 

@@ -34,6 +34,20 @@ type Configurations = {
       hostname: string
     }
   }
+
+  database: {
+    host: string
+    port: number
+    user: string
+    password: string
+    name: string
+    connectionTimeout: number
+    debug: boolean
+    tables: {
+      posts: string
+    }
+    migrationsTable: string
+  }
 }
 
 export { Configurations }

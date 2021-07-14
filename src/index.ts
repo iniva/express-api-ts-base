@@ -2,17 +2,25 @@ import express from 'express'
 import helmet from 'helmet'
 import pinoExpress from 'express-pino-logger'
 
-// Middlewares
 import { GlobalMiddlewares } from '@middlewares/global'
 import { ErrorHandler } from '@middlewares/ErrorHandler'
 import { NotFoundHandler } from '@middlewares/NotFoundHandler'
-// API Modules
 import api from '@modules/api'
+import { Database } from '@modules/database/Database'
+import { PostsRepository } from '@modules/database/PostsRepository'
+import { PostsService } from '@modules/services/posts/PostsService'
 
 import config from './config'
 import { LoggerFactory } from '@utils/LoggerFactory'
 
 const logger = LoggerFactory.create()
+
+// Initialize Database & repositories
+const database = new Database(config.database)
+const postsRepository = new PostsRepository(database.client, config.database.tables.posts)
+
+// Services
+const postsService = new PostsService(postsRepository)
 
 // Express APP
 const app = express()
@@ -37,7 +45,11 @@ app.use(pinoExpress({ ...config.logger }))
 app.use('/*', GlobalMiddlewares)
 
 // Load API Modules
-api(app)
+api(app, {
+  posts: {
+    postsService
+  }
+})
 
 // Set Global Error Handler Middleware
 app.use(ErrorHandler)

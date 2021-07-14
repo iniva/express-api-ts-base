@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-class HealthHandler {
+export class HealthHandler {
   static async handle(req: Request, res: Response): Promise<void> {
     res.send({
       data: {
@@ -10,5 +10,3 @@ class HealthHandler {
     })
   }
 }
-
-export { HealthHandler }
