@@ -12,14 +12,17 @@
   },
   "scripts": {
     "build": "rm -rf ./dist && tsc",
-    "dev": "nodemon",
+    "dev": "yarn migrate && nodemon",
     "test:lint": "eslint . --ext .ts",
     "test:lint-fix": "eslint . --ext .ts --fix",
     "test:unit": "NODE_ENV=test TS_NODE_PROJECT='./tsconfig-test-unit.json' mocha --ui bdd --timeout 10000 -r ts-node/register -r tsconfig-paths/register --recursive \"./test/unit/**/*.ts\"",
     "test:coverage": "NODE_ENV=test TS_NODE_PROJECT='./tsconfig-test-unit.json' nyc mocha --ui bdd --recursive --timeout 10000 -r ts-node/register -r tsconfig-paths/register \"./test/unit/**/*.ts\"",
+    "test:integration": "yarn migrate && mocha --ui bdd --timeout 30000 -r ts-node/register \"test/integration/index.ts\"",
     "release": "SKIP_PREPARE_COMMIT=true standard-version",
     "release:dry": "SKIP_PREPARE_COMMIT=true standard-version --dry-run",
-    "start": "node -r tsconfig-paths/register /app/src/index.js"
+    "start": "node -r tsconfig-paths/register /app/src/index.js",
+    "migrate": "node -r dotenv/config -r tsconfig-paths/register ./node_modules/.bin/knex migrate:latest --knexfile=./knexfile.ts",
+    "migrate:make": "node -r dotenv/config -r tsconfig-paths/register ./node_modules/.bin/knex migrate:make --knexfile knexfile.ts -x ts"
   },
   "dependencies": {
     "@hapi/boom": "^9.1.1",
@@ -29,27 +32,34 @@
     "helmet": "^4.4.1",
     "ioredis": "^4.23.0",
     "joi": "^17.4.0",
+    "knex": "^0.95.6",
     "lodash": "^4.17.20",
+    "pg": "^8.6.0",
     "pino": "^6.11.2",
     "pino-pretty": "^4.5.0",
-    "tsconfig-paths": "^3.9.0"
+    "tsconfig-paths": "^3.9.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/chai": "^4.2.15",
     "@types/express": "^4.17.11",
     "@types/express-pino-logger": "^4.0.2",
+    "@types/faker": "^5.5.6",
     "@types/ioredis": "^4.22.0",
     "@types/lodash": "^4.14.168",
     "@types/mocha": "^8.2.1",
     "@types/node": "^12.20.0",
     "@types/pino": "^6.3.6",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
     "@typescript-eslint/parser": "^4.15.2",
+    "axios": "^0.21.1",
     "chai": "^4.3.3",
     "commitizen": "^4.2.3",
     "cz-conventional-changelog": "^3.3.0",
     "dotenv": "^8.2.0",
     "eslint": "^7.21.0",
+    "faker": "^5.5.3",
     "husky": "^5.1.1",
     "mocha": "^8.3.0",
     "nock": "^13.0.11",
@@ -57,7 +67,7 @@
     "nyc": "^15.1.0",
     "standard-version": "^9.1.1",
     "ts-node": "^9.1.1",
-    "typescript": "^4.2.2"
+    "typescript": "^4.3.4"
   },
   "nyc": {
     "all": true,
