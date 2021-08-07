@@ -23,8 +23,8 @@
       "@modules/*": [
         "modules/*"
       ],
-      "@types/*": [
-        "types/*"
+      "@typings/*": [
+        "typings/*"
       ],
       "@utils/*": [
         "utils/*"
