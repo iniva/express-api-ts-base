@@ -1,6 +1,6 @@
 import knex, { Knex } from 'knex'
 
-import { Configurations } from 'types/Configurations'
+import { Configurations } from '@typings/Configurations'
 
 export class Database {
   private _client: Knex

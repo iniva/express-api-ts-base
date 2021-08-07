@@ -1,4 +1,4 @@
-import { Configurations } from '../types/Configurations'
+import { Configurations } from '@typings/Configurations'
 import devConfig from './dev'
 import testConfig from './test'
 import prodConfig from './prod'

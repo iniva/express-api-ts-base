@@ -2,8 +2,8 @@ import { isNil } from 'lodash'
 
 import { PostsRepository } from '@modules/database/PostsRepository'
 import { PostDto } from 'dtos/PostDto'
-import { PostFilters } from 'types/PostFilters'
-import { Pagination } from 'types/Pagination'
+import { PostFilters } from '@typings/PostFilters'
+import { Pagination } from '@typings/Pagination'
 import { PostNotFoundException } from './PostNotFoundException'
 
 type UnknownObject = Record<string, string>
@@ -57,7 +57,7 @@ export class PostsService {
     const queryParams = <UnknownObject>query
     const filterValues: PostFilters = {}
 
-    for(const filter of Object.keys(queryParams)) {
+    for (const filter of Object.keys(queryParams)) {
       filterValues[filter] = queryParams[filter]
     }
 

@@ -1,7 +1,7 @@
 import os from 'os'
 import { version } from '../../package.json'
 
-import { Configurations } from 'types/Configurations'
+import { Configurations } from '@typings/Configurations'
 
 const API_VERSION = version
 const APP_NAME = process.env.APP_NAME || 'Express TS API'

@@ -1,6 +1,8 @@
 import { Router } from 'express'
 import { isNil } from 'lodash'
 
+import { Dependencies } from '@typings/Dependencies'
+import { ApiModule } from '@typings/ApiModule'
 import { AsyncHandler } from '@middlewares/AsyncHandler'
 import { PostListHandler } from './PostListHandler'
 import { PostDetailsHandler } from './PostDetailsHandler'
@@ -8,7 +10,7 @@ import { PostCreateHandler } from './PostCreateHandler'
 import { PostUpdateHandler } from './PostUpdateHandler'
 import { PostDeleteHandler } from './PostDeleteHandler'
 
-const posts = (dependencies: any) => {
+const posts = (dependencies: Dependencies): ApiModule => {
   if (isNil(dependencies) || isNil(dependencies.posts)) {
     throw new TypeError('Missing dependencies for Posts API domain')
   }

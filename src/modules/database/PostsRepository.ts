@@ -2,8 +2,8 @@ import { Knex } from 'knex'
 import { isEmpty, isNil, omit } from 'lodash'
 
 import { PostDto } from 'dtos/PostDto'
-import { PostFilters } from 'types/PostFilters'
-import { Pagination } from 'types/Pagination'
+import { PostFilters } from '@typings/PostFilters'
+import { Pagination } from '@typings/Pagination'
 
 type DehydratedPost = {
   id: string

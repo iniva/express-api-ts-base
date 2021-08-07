@@ -1,4 +1,4 @@
-type Configurations = {
+export type Configurations = {
   debug: {
     global: boolean
     request: boolean
@@ -49,5 +49,3 @@ type Configurations = {
     migrationsTable: string
   }
 }
-
-export { Configurations }
