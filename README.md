@@ -9,3 +9,7 @@ Base code for an API based on Express + Typescript
   cd docker/local && bash run.sh
   ```
 - By default, the API is listening on port `8091`. You can change this in your `.env` file
+
+# Running Tests
+- **Unit**: `yarn test:unit`
+- **Integration**: `cd docker/test-integration && bash run.sh`

@@ -14,7 +14,7 @@ describe('Posts', () => {
   it('should fail with HTTP 400 when creating a post with invalid data', async () => {
     try {
       await api.post('/posts', {})
-    } catch (error) {
+    } catch (error: any) {
       expect(error.response.status).to.be.equal(400)
     }
   })
@@ -43,7 +43,7 @@ describe('Posts', () => {
 
     try {
       await api.put(`/posts/${postId}`, {})
-    } catch (error) {
+    } catch (error: any) {
       expect(error.response.status).to.be.equal(400)
     }
   })
@@ -73,7 +73,7 @@ describe('Posts', () => {
   it('should fail with HTTP 404 when post does not exist', async () => {
     try {
       await api.get('/posts/1234567')
-    } catch (error) {
+    } catch (error: any) {
       expect(error.response.status).to.be.equal(404)
     }
   })
@@ -113,7 +113,7 @@ describe('Posts', () => {
 
     try {
       await api.get(`/posts/${postId}`)
-    } catch (error) {
+    } catch (error: any) {
       expect(error.response.status).to.be.equal(404)
     }
   })
@@ -139,7 +139,7 @@ describe('Posts', () => {
 
       await api.put(`/posts/${postId}`, { published: true })
 
-      const filter = { params: { published: 'true' }}
+      const filter = { params: { published: 'true' } }
       const listResponse = await api.get('/posts', filter)
       const posts = listResponse.data.data
 
@@ -149,7 +149,7 @@ describe('Posts', () => {
     })
 
     it('should return a list of non-published posts', async () => {
-      const filter = { params: { published: 'false' }}
+      const filter = { params: { published: 'false' } }
       const listResponse = await api.get('/posts', filter)
       const posts = listResponse.data.data
 
@@ -162,7 +162,7 @@ describe('Posts', () => {
       const response = await api.get('/posts')
       const postTitle = response.data.data[0].title
 
-      const filter = { params: { title: postTitle }}
+      const filter = { params: { title: postTitle } }
       const listResponse = await api.get('/posts', filter)
       const posts = listResponse.data.data
 
@@ -175,7 +175,7 @@ describe('Posts', () => {
       const response = await api.get('/posts')
       const postAuthor = response.data.data[0].author
 
-      const filter = { params: { author: postAuthor }}
+      const filter = { params: { author: postAuthor } }
       const listResponse = await api.get('/posts', filter)
       const posts = listResponse.data.data
 
