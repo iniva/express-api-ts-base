@@ -1,4 +1,4 @@
-import IoRedis from 'ioredis'
+import Redis, { RedisOptions, Redis as RedisType, RedisKey, RedisValue } from 'ioredis'
 import { Logger } from 'pino'
 
 import redisConfig from '../config/redis'
@@ -6,8 +6,8 @@ import { LoggerFactory } from '@utils/LoggerFactory'
 
 class CacheRedis {
   private _logger: Logger
-  private _options: IoRedis.RedisOptions
-  private _client: IoRedis.Redis | null = null
+  private _options: RedisOptions
+  private _client: RedisType | null = null
   private _retries: number = 0
   private _maxRetries: number = 0
 
@@ -35,9 +35,9 @@ class CacheRedis {
     this._options = options
   }
 
-  async start(): Promise<IoRedis.Redis> {
+  async start(): Promise<RedisType> {
     return new Promise((resolve, reject) => {
-      const client = new IoRedis(this._options)
+      const client = new Redis(this._options)
 
       client.on('error', error => {
         this._logger.error(`Redis encountered a problem: ${error.message}`)
@@ -84,7 +84,7 @@ class CacheRedis {
     return this._client.quit()
   }
 
-  async has(key: IoRedis.KeyType): Promise<number> {
+  async has(key: RedisKey): Promise<number> {
     if (this._client === null) {
       throw new Error('Redis client is not ready or connection was closed')
     }
@@ -92,7 +92,7 @@ class CacheRedis {
     return this._client.exists(key)
   }
 
-  async get(key: IoRedis.KeyType): Promise<string | null> {
+  async get(key: RedisKey): Promise<string | null> {
     if (this._client === null) {
       throw new Error('Redis client is not ready or connection was closed')
     }
@@ -101,18 +101,19 @@ class CacheRedis {
   }
 
   async set(
-    key: IoRedis.KeyType,
-    value: IoRedis.ValueType,
+    key: RedisKey,
+    value: RedisValue,
     ttl?: string | number
   ): Promise<'OK' | null> {
     if (this._client === null) {
       throw new Error('Redis client is not ready or connection was closed')
     }
 
-    return this._client.set(key, value, 'ex', ttl)
+    // @ts-ignore
+    return this._client.set(key, value, 'EX', ttl)
   }
 
-  async drop(key: IoRedis.KeyType): Promise<number> {
+  async drop(key: RedisKey): Promise<number> {
     if (this._client === null) {
       throw new Error('Redis client is not ready or connection was closed')
     }

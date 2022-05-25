@@ -1,6 +1,6 @@
 import 'mocha'
 import { expect } from 'chai'
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 
 import api from './helpers/api'
 
