@@ -109,7 +109,10 @@ class CacheRedis {
       throw new Error('Redis client is not ready or connection was closed')
     }
 
-    // @ts-ignore
+    if (!ttl) {
+      return this._client.set(key, value)
+    }
+
     return this._client.set(key, value, 'EX', ttl)
   }
 
